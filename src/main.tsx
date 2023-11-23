@@ -34,16 +34,12 @@ export function OtpInput({ length = 6 }: OtpInputPropsType) {
   }, []);
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      // Prevent tab press from moving focus as for user its one input only
-      if (e.key === "Tab") {
-        e.preventDefault();
-      }
       if (e.key === "ArrowLeft") {
         setFocusOn(focusOn - 1);
         setFocusOn(Math.max(focusOn - 1, 0));
       } else if (e.key === "ArrowRight") {
         setFocusOn(Math.min(focusOn + 1, length - 1));
-      } else if (e.key === "Backspace") {
+      } else if (e.key === "Backspace" || e.key === "Delete") {
         value[focusOn] = "";
         setFocusOn(Math.max(focusOn - 1, 0));
       } else if (!isNaN(Number(e.key))) {
@@ -61,6 +57,7 @@ export function OtpInput({ length = 6 }: OtpInputPropsType) {
   }, []);
   return (
     <div
+      onInput={(e) => console.log(e)}
       onPaste={handlePaste}
       onKeyDown={handleKeyDown}
       onClick={moveFocusOnClick}
@@ -101,6 +98,8 @@ function SingleDigitInput({
       value={val}
       required
       type="text"
+      // need this to remove the keyboard arrows that ios keyboard shows
+      tabIndex={-1}
       maxLength={1}
       data-index={index}
       autoComplete="one-time-code"
