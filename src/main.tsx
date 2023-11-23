@@ -76,6 +76,7 @@ export function OtpInput({ length = 6 }: OtpInputPropsType) {
           focus={focusOn === i}
         />
       ))}
+      <input type="text" />
     </div>
   );
 }
@@ -99,7 +100,7 @@ function SingleDigitInput({
       required
       type="text"
       // need this to remove the keyboard arrows that ios keyboard shows
-      tabIndex={-1}
+      tabIndex={index !== 0 ? -1 : 0}
       maxLength={1}
       data-index={index}
       autoComplete="one-time-code"
