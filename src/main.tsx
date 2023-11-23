@@ -35,9 +35,7 @@ export function OtpInput({ length = 6 }: OtpInputPropsType) {
   }, []);
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      debugger;
       if (e.key === "ArrowLeft") {
-        setFocusOn(focusOn - 1);
         setFocusOn(Math.max(focusOn - 1, 0));
       } else if (e.key === "ArrowRight") {
         setFocusOn(Math.min(focusOn + 1, length - 1));
@@ -47,7 +45,7 @@ export function OtpInput({ length = 6 }: OtpInputPropsType) {
       }
       setValue([...value]);
     },
-    [length, focusOn]
+    [length, focusOn, value]
   );
   const moveFocusOnClick = useCallback((e: MouseEvent<HTMLInputElement>) => {
     if (e.target instanceof HTMLInputElement && e.target.dataset?.index) {
